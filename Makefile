@@ -33,30 +33,28 @@ ifeq ($(RTE_SDK),)
 $(error "Please define RTE_SDK environment variable")
 endif
 
-# Default target, can be overriden by command line or environment
+# Default target, can be overridden by command line or environment
 RTE_TARGET ?= x86_64-native-linuxapp-gcc
 
 include $(RTE_SDK)/mk/rte.vars.mk
 
 # binary name
-APP = test_bktrace
+APP = l2fwd
 
 # all source are stored in SRCS-y
-SRCS-y := main.c
+#SRCS-y := main.c
+SRCS-y := contextunwind.c main_org.c
 
-CFLAGS += -L/usr/lib/x86_64-linux-gnu/ -lunwind 
-#CFLAGS += -ggdb3 -L/usr/lib/x86_64-linux-gnu/ -lunwind 
-LDFLAGS += -L/usr/lib/x86_64-linux-gnu/ -lunwind 
-#CFLAGS += -ggdb3 -fno-stack-protector -z execstack -lunwind -l unwind-coredump -l unwind-generic -l unwind-ptrace -l unwind-x86_64
-#CFLAGS += -ggdb3  -Wstack-usage=100
-#CFLAGS += -ggdb -O2 -fstack-usage -fdump-rtl-expand -Wstack-usage=10
-#CFLAGS += -ggdb -O2 -fstack-protector-all
-#CFLAGS += -ggdb -O2 -fstack-check
-#CFLAGS += -O3 -fsanitize=address
-#CFLAGS += -O3
-
+CFLAGS += -O3
 CFLAGS += $(WERROR_FLAGS)
-#LDFLAGS += -Wl,-Map
 
+#CFLAGS += -ggdb -L/usr/lib/x86_64-linux-gnu/ -lunwind
+#CFLAGS += -L/usr/lib/x86_64-linux-gnu/ -lunwind
+#CFLAGS += -ggdb -DDUMPSTACK_EXTRASTACK -DDUMPSTACK -L/usr/lib/x86_64-linux-gnu/ -lunwind
+#CFLAGS += -DDUMPSTACK_EXTRASTACK -DDUMPSTACK -L/usr/lib/x86_64-linux-gnu/ -lunwind
+#CFLAGS += -DDUMPSTACK_EXTRASTACK -DDUMPSTACK -L/usr/lib/x86_64-linux-gnu/ -lunwind
+CFLAGS += -DDUMPSTACK_EXTRAREG -DDUMPSTACK_EXTRASTACK -DDUMPSTACK -L/usr/lib/x86_64-linux-gnu/ -lunwind
+#CFLAGS += -L/usr/lib/x86_64-linux-gnu/ -lunwind
+LDFLAGS += -L/usr/lib/x86_64-linux-gnu/ -lunwind
 
 include $(RTE_SDK)/mk/rte.extapp.mk
