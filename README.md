@@ -24,7 +24,7 @@ dump all threads stack and register information. useful in target where no gdb o
 * Can we register SIGUSER1 to dump intermediate? Yes
 
 ##### Log
-"""
+```
  Executable Name: ./build/l2fwd
 
  *** Processing sig_handler 139626246162624 for signal 11  << thread handling the signal>>
@@ -1057,4 +1057,4 @@ pdump-thread
  --- --- --- --- --- --- --- ---
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  ---------------- Stack Unwind DONE ----------------------
-"""
+```
